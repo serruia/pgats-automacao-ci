@@ -1,0 +1,34 @@
+name: 'Nível 1 - Execução manual'
+
+# gatilho de execução manual
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e-tests:
+    # máquina onde o job vai ser executado
+    runs-on: ubuntu-latest
+
+    # passo a passo das ações do job
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalando Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalando dependências
+        run: npm install
+
+      - name: Instalando Cypress
+        run: npx cypress install
+
+      - name: Executando testes e2e
+        run: npx cypress run
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: relatorio-de-testes
+          path: ./cypress/reports
