@@ -21,9 +21,6 @@ jobs:
       - name: Instalando dependências
         run: npm install
 
-      - name: Instalando Cypress
-        run: npx cypress install
-
       - name: Executando testes e2e
         run: npx cypress run
 
